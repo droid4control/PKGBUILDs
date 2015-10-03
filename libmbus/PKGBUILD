@@ -1,0 +1,46 @@
+# Maintainer: Cougar <cougar@random.ee>
+pkgname=libmbus
+pkgver=0.8.0
+pkgrel=1
+epoch=
+pkgdesc="Open source M-bus (Meter-Bus) library"
+arch=('arm')
+url="http://www.rscada.se/libmbus/"
+license=('BSD')
+groups=()
+depends=('glibc')
+makedepends=()
+checkdepends=()
+optdepends=()
+provides=()
+conflicts=()
+replaces=()
+backup=()
+options=()
+install=
+changelog=
+source=($pkgname-$pkgver.tar.gz)
+noextract=()
+md5sums=('4ae1dcf3fc87f6ada985090aeb4530c9')
+
+prepare() {
+	cd "$srcdir/$pkgname-$pkgver"
+}
+
+build() {
+	cd "$srcdir/$pkgname-$pkgver"
+	./configure --prefix=/usr
+	make
+}
+
+check() {
+	cd "$srcdir/$pkgname-$pkgver"
+	make -k check
+}
+
+package() {
+	cd "$srcdir/$pkgname-$pkgver"
+	make DESTDIR="$pkgdir/" install
+	mkdir -p $pkgdir/usr/share/licenses/$pkgname
+	cp $srcdir/$pkgname-$pkgver/COPYING $pkgdir/usr/share/licenses/$pkgname
+}
