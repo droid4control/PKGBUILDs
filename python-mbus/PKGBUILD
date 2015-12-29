@@ -1,7 +1,7 @@
 # Maintainer: Cougar <cougar@random.ee>
 pkgname=('python-mbus')
 pkgver=0.0.1
-pkgrel=2
+pkgrel=4
 epoch=
 pkgdesc="Python bindings to the libmbus library from rSCADA"
 arch=('arm')
@@ -13,7 +13,7 @@ backup=()
 options=()
 install=
 source=(https://github.com/droid4control/$pkgname/archive/py3.zip MBus.patch)
-sha256sums=('179affcff816f8488ed4dad29df84f02b8b0b7f6c525e84585d75fb809c89344' '64b38c94f633c1e848e5f51fcf25831bef03fe5f9bb4647a5c40033c0aef17bf')
+sha256sums=('c6c2e9c872f1568b7491650758923e686e8f9d28be6329f13cc80b4b56a637a9' '64b38c94f633c1e848e5f51fcf25831bef03fe5f9bb4647a5c40033c0aef17bf')
 
 prepare() {
 	cd "$srcdir/$pkgname-py3"
@@ -22,6 +22,7 @@ prepare() {
 
 package_python-mbus() {
 	depends=('python' 'libmbus>=0.8.0-3')
+	optdepends=('python-xmltodict: XML parser')
 	cd "$srcdir/$pkgname-py3"
 	python setup.py install --root="$pkgdir/" --optimize=1
 	install -Dm 644 LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE"
