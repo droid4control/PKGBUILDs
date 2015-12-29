@@ -1,39 +1,30 @@
 # Maintainer: Cougar <cougar@random.ee>
-pkgname=('python-iMX233_GPIO' 'python2-iMX233_GPIO')
+pkgname=('python-iMX233_GPIO')
 _pkgname=iMX233_GPIO
-pkgver=0.1.0
-pkgrel=1
+pkgver=0.1.1
+pkgrel=2
 epoch=
 pkgdesc="Control GPIOs on iMX233-OLinuXino"
 arch=('arm')
-url="https://www.olimex.com/"
+url="https://github.com/droid4control/iMX233_GPIO"
 license=('MIT')
 groups=()
 makedepends=('python-setuptools' 'python2-setuptools' 'gcc')
 backup=()
 options=()
 install=
-source=($_pkgname-$pkgver.tar.gz)
-sha256sums=('3fc093d56f9bf4a0eca9f7d1bf23f76732d6b751f1a5979d48d70ae4f44bf34a')
+source=(https://github.com/droid4control/$_pkgname/archive/master.zip)
+sha256sums=('fa00a4b47ac880f9a2a3a56c63adb3b0d08ebe3b02701e186dee22f681200e83')
 
 prepare() {
-	cd "$srcdir/$_pkgname-$pkgver"
+	cd "$srcdir/$_pkgname-master"
 }
 
 package_python-iMX233_GPIO() {
 	depends=('python' 'python-six')
-	cd "$srcdir/$_pkgname-$pkgver"
+	cd "$srcdir/$_pkgname-master"
 	python setup.py install --root="$pkgdir/" --optimize=1
 	install -Dm 644 LICENSE.txt "$pkgdir/usr/share/licenses/$pkgname/LICENSE.txt"
 	install -Dm 644 CHANGES.txt "$pkgdir/usr/share/doc/$pkgname/CHANGES.txt"
-	install -Dm 644 README.txt "$pkgdir/usr/share/doc/$pkgname/README.txt"
-}
-
-package_python2-iMX233_GPIO() {
-	depends=('python2' 'python2-six')
-	cd "$srcdir/$_pkgname-$pkgver"
-	python2 setup.py install --root="$pkgdir/" --optimize=1
-	install -Dm 644 LICENSE.txt "$pkgdir/usr/share/licenses/$pkgname/LICENSE.txt"
-	install -Dm 644 CHANGES.txt "$pkgdir/usr/share/doc/$pkgname/CHANGES.txt"
-	install -Dm 644 README.txt "$pkgdir/usr/share/doc/$pkgname/README.txt"
+	install -Dm 644 README.md "$pkgdir/usr/share/doc/$pkgname/README.md"
 }
