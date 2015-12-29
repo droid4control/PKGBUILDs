@@ -1,14 +1,14 @@
 # Maintainer: Cougar <cougar@random.ee>
 pkgname=libmbus
 pkgver=0.8.0
-pkgrel=1
+pkgrel=3
 epoch=
 pkgdesc="Open source M-bus (Meter-Bus) library"
 arch=('arm')
-url="http://www.rscada.se/libmbus/"
+url="https://github.com/droid4control/libmbus"
 license=('BSD')
 groups=()
-depends=('glibc')
+depends=('gcc-libs')
 makedepends=()
 checkdepends=()
 optdepends=()
@@ -20,27 +20,32 @@ options=()
 install=
 changelog=
 source=($pkgname-$pkgver.tar.gz)
+source=(https://github.com/droid4control/$pkgname/archive/master.zip)
 noextract=()
-md5sums=('4ae1dcf3fc87f6ada985090aeb4530c9')
+sha256sums=('59977a0771ed7f5cf5b38e945066611e5408540544acc490400cd2f36e9a418e')
 
 prepare() {
-	cd "$srcdir/$pkgname-$pkgver"
+	cd "$srcdir/$pkgname-master"
 }
 
 build() {
-	cd "$srcdir/$pkgname-$pkgver"
+	cd "$srcdir/$pkgname-master"
+	autoheader
+	aclocal
+	libtoolize --ltdl --copy --force
+	automake --add-missing --copy
+	autoconf
 	./configure --prefix=/usr
 	make
 }
 
 check() {
-	cd "$srcdir/$pkgname-$pkgver"
+	cd "$srcdir/$pkgname-master"
 	make -k check
 }
 
 package() {
-	cd "$srcdir/$pkgname-$pkgver"
+	cd "$srcdir/$pkgname-master"
 	make DESTDIR="$pkgdir/" install
-	mkdir -p $pkgdir/usr/share/licenses/$pkgname
-	cp $srcdir/$pkgname-$pkgver/COPYING $pkgdir/usr/share/licenses/$pkgname
+	install -Dm 644 COPYING "$pkgdir/usr/share/licenses/$pkgname/COPYING"
 }
