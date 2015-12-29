@@ -1,0 +1,13 @@
+diff --git a/mbus/MBus.py b/mbus/MBus.py
+index 7f26165..dba0c53 100644
+--- a/mbus/MBus.py
++++ b/mbus/MBus.py
+@@ -60,7 +60,7 @@ class MBus:
+                 raise TypeError("port number not given as integer")
+ 
+         if None == libpath:
+-            libpath = "/usr/local/lib/libmbus.so"
++            libpath = "/usr/lib/libmbus.so"
+ 
+         self._libmbus = cdll.LoadLibrary(libpath)
+ 
